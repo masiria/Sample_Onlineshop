@@ -41,6 +41,11 @@ INSTALLED_APPS = [
 
     'apps.users.apps.UsersConfig',
     'apps.product.apps.ProductConfig',
+    'apps.side.apps.SideConfig',
+
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -58,7 +63,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,3 +139,10 @@ AUTH_USER_MODEL = 'users.User'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+
+STAR_RATINGS_STAR_HEIGHT = 20
