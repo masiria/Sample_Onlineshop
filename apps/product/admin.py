@@ -28,6 +28,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'discount', 'quantity', 'category', 'is_active', 'created_at')
     prepopulated_fields = {'slug': ('name',)}
     inlines = [ProductImageInline, ProductAttributeValueInline]
+    readonly_fields = ('user',)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            obj.user = request.user
+        super().save_model(request, obj, form, change)
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -35,7 +41,12 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    ...
+    readonly_fields = ('user',)
+
+    def save_model(self, request, obj, form, change):
+        if not obj.id:
+            obj.user = request.user
+        super().save_model(request, obj, form, change)
 
 
 admin.site.register(models.AttributeGroup, AttributeGroupAdmin)

@@ -53,7 +53,7 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='products')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, related_name='products')
     tag = models.ManyToManyField('Tag', blank=True, related_name='products')
 
     def __str__(self):
@@ -91,7 +91,7 @@ class Comment(models.Model):
 
 class Tag(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='tags')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, blank=True, related_name='tags')
 
     def __str__(self):
         return self.name
