@@ -41,7 +41,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class TagAdmin(admin.ModelAdmin):
-    readonly_fields = ('user',)
+    readonly_fields = ('user', 'slug')
 
     def save_model(self, request, obj, form, change):
         if not obj.id:

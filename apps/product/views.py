@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator
 from . import models
 from .forms import CommentForm
 
@@ -35,16 +36,31 @@ class ProductDetailView(View):
 
 
 class CategoryPageView(View):
-    def get(self, request, category_slug):
+    def get(self, request, category_slug, page=1):
         category = get_object_or_404(models.Category, slug=category_slug)
-        products = models.Product.objects.filter(category=category, is_active=True)
+        products = models.Product.objects.filter(category=category, is_active=True).order_by('-created_at')
+        paginator = Paginator(products, per_page=8)
+        page_object = paginator.get_page(page)
+        page_object.adjusted_elided_pages = paginator.get_elided_page_range(page, on_each_side=1, on_ends=2)
         context = {
             'products': products,
             'category': category,
+            'page_obj': page_object,
         }
         return render(request, 'product/category.html', context=context)
 
 
 class TagPageView(View):
-    ...
+    def get(self, request, tag_slug, page=1):
+        tag = get_object_or_404(models.Tag, slug=tag_slug)
+        products = tag.products.all().order_by('-created_at')
+        paginator = Paginator(products, per_page=8)
+        page_object = paginator.get_page(page)
+        page_object.adjusted_elided_pages = paginator.get_elided_page_range(page, on_each_side=1, on_ends=2)
+        context = {
+            'products': products,
+            'page_obj': page_object,
+            'tag': tag
+        }
+        return render(request, 'product/tag.html', context=context)
 

@@ -19,8 +19,8 @@
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">{{ category.name }}</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Sample category page</p>
+                    <h1 class="display-4 fw-bolder">{{ tag.name }}</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Sample tag page</p>
                 </div>
             </div>
         </header>
@@ -97,7 +97,7 @@
                         <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
                             <a class="page-link" href="
                                 {% if page_obj.has_previous %}
-                                    {% url 'product:category_page' category.slug page_obj.previous_page_number %}
+                                    {% url 'product:tag_page' tag.slug page_obj.previous_page_number %}
                                 {% endif %}">
                                 Previous
                             </a>
@@ -108,7 +108,7 @@
                             {% else %}
                                 <li class="page-item">
                                     <a class="page-link {% if page_number == page_obj.number %}active{% endif %}"
-                                       href="{% url 'product:category_page' category.slug page_number %}">
+                                       href="{% url 'product:tag_page' tag.slug page_number %}">
                                         {{ page_number }}
                                     </a>
                                 </li>
@@ -117,7 +117,7 @@
                         <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
                             <a class="page-link" href="
                                 {% if page_obj.has_next %}
-                                    {% url 'product:category_page' category.slug page_obj.next_page_number %}
+                                    {% url 'product:tag_page' tag.slug page_obj.next_page_number %}
                                 {% endif %}">
                                 Next
                             </a>
